@@ -1,4 +1,6 @@
 const needle = require('needle')
+const fs = require('fs')
+const path = require('path')
 const fetchImdbItems = require('./fetch-imdb-links')
 
 const getItems = async() => {
@@ -32,7 +34,9 @@ const getItems = async() => {
 			}
 		});
 		const metaArray = (await Promise.all(metaPromises)).filter(meta => meta !== null);
-		return metaArray;
+		const filePath = path.join(__dirname, 'meta-data.json');
+		await fs.promises.writeFile(filePath, JSON.stringify(metaArray, null, 2));
+		return filePath;
 	} catch (error) {
 		console.error('Failed to fetch items:', error);
 		return [];
