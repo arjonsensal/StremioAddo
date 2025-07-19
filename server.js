@@ -19,7 +19,7 @@ updateItems()
 // Call updateItems every 5 minutes
 setInterval(updateItems, 600000)
 
-serveHTTP(addonInterface, { port: 54203 })
+serveHTTP(addonInterface, { port: process.env.PORT })
 
 // when you've deployed your addon, un-comment this line
 // publishToCentral("https://my-addon.awesome/manifest.json")
