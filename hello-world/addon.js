@@ -26,29 +26,34 @@ const manifest = {
 	]
 }
 const builder = new addonBuilder(manifest)
-
+let items = [{id: 'tt9198364', type: 'movie'},
+	{id: 'tt1259528', type: 'movie'},
+	{id: 'tt7724322', type: 'movie'}]
 const getItems = async() => {
 	try {
-		const items = await fetchImdbItems();
 		console.log('Found items:');
-		items.forEach(item => console.log(`ID: ${item.id}, Type: ${item.type}`));
 		const requests = items.map(item => needle('get', 'https://v3-cinemeta.strem.io/meta/' + item.type + '/' + item.id + '.json'));
 		const responses = await Promise.all(requests)
-		responses.forEach((response, index) => {
-				if (response.statusCode === 200) {
-					console.log(`Data from ${urls[index]}:`, response.body.meta);
-				} else {
-					console.error(`Error fetching ${urls[index]}: Status Code ${response.statusCode}`);
-				}
-			});
+		const metaArray = responses.map((response, index) => {
+			if (response.statusCode === 200) {
+				console.log(`Data from ${items[index].id}:`, response.body.meta);
+				return response.body.meta;
+			} else {
+				console.error(`Error fetching ${items[index].id}: Status Code ${response.statusCode}`);
+				return null;
+			}
+		}).filter(meta => meta !== null);
+		return metaArray;
 	} catch (error) {
 		console.error('Failed to fetch items:', error);
+		return [];
 	}
 }
 
-builder.defineCatalogHandler(({type, id, extra}) => {
+builder.defineCatalogHandler(async ({type, id, extra}) => {
 	console.log("request for catalogs: "+type+" "+id)
-	return Promise.resolve(getItems())
+	const metas = await getItems();
+	return { metas };
 })
 
 module.exports = builder.getInterface()
