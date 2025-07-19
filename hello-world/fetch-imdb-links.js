@@ -8,7 +8,7 @@ async function fetchImdbItems() {
   let browser;
   try {
     // Launch browser with anti-scraping configurations
-    browser = await chromium.launch({ headless: false });
+    browser = await chromium.launch({ headless: true });
     const context = await browser.newContext({
       userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36',
       viewport: { width: 1280, height: 720 },
@@ -90,6 +90,7 @@ async function fetchImdbItems() {
     // Clean exitß
     await context.clearCookies();
     await browser.close();
+    console.log(items.length)
     return items;
   } catch (error) {
     console.error('An error occurred:', error);
