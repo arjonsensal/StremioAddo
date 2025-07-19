@@ -21,7 +21,11 @@ const manifest = {
 	"catalogs": [
 		{
 			"type": "movie",
-			"id": "top"
+			"id": "Our Watchlist",
+		},
+		{
+			"type": "series",
+			"id": "Our Watchlist",
 		}
 	],
 	"resources": [
