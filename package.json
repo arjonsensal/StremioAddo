@@ -4,7 +4,7 @@
   "description": "Our Watchlist",
   "scripts": {
     "start": "node server.js",
-    "postinstall": "npx playwright install-deps"
+    "postinstall": "npx playwright install-deps && sudo apt-get install libnspr4\\ libnss3\\ libgbm1"
   },
   "dependencies": {
     "@playwright/test": "^1.54.1",
