@@ -9,7 +9,7 @@ const updateItems = async () => {
         const filePath = await getItems()
         console.log(`Items updated and saved to ${filePath}`)
     } catch (error) {
-        console.error('Error updating items:', error)
+        console.error('Error updating items1:', error)
     }
 }
 
