@@ -4,7 +4,7 @@
   "description": "Our Watchlist",
   "scripts": {
     "start": "node server.js",
-    "postinstall": "npx playwright install"
+    "postinstall": "npx playwright install && npx playwright install-deps"
   },
   "dependencies": {
     "@playwright/test": "^1.54.1",
